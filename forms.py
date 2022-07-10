@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, IntegerField, DateField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
-from Budget_Keeper.models import User
+from models import User
 
 #Create User Form
 class RegistrationForm(FlaskForm):
