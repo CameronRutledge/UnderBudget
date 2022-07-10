@@ -1,8 +1,8 @@
 from init import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user
-from Budget_Keeper.models import User
-from Budget_Keeper.forms import LoginForm, RegistrationForm
+from models import User
+from forms import LoginForm, RegistrationForm
 
 @app.route('/')
 def home():
