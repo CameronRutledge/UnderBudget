@@ -1,4 +1,4 @@
-from Budget_Keeper import db, login_manager
+from Budget_Keeper_Site import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
