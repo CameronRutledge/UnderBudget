@@ -1,12 +1,32 @@
 from init import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from models import User
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, SavingsForm
+from nltk import flatten
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def home():
-    return render_template('home.html')
+    savingsForm = SavingsForm()
+
+    if savingsForm.validate_on_submit():
+        print (savingsForm.salary.data)
+        print (savingsForm.savings_date.data)
+        return(redirect(url_for('home')))
+    else:
+        print ('test')
+
+    if current_user.is_authenticated:
+        return render_template('home.html', savingsForm = savingsForm)
+    else:
+        return render_template('home.html', savingsForm = savingsForm, test = '2019-05')
+
+@app.route('/budgetsheets')
+def budgetsheets():
+    if current_user.is_authenticated:
+        return render_template('budgetsheets.html', test = current_user.email)
+    else:
+        return render_template('budgetsheets.html', test = 'testers')
 
 @app.route('/logout')
 @login_required
@@ -17,21 +37,23 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user)
-            flash('Successfully Logged In!')
+            flash('Welcome ' + current_user.name + '!', 'primary')
             next = request.args.get('next')
-            return redirect(url_for('home'))
+            if next == None or not next[0]=='/':
+                next = 'home'
+            return redirect(url_for(next))
         else:
-            flash('Invalid Email/Password')
+            flash('Invalid Email/Password', 'danger')
             return redirect(url_for('login'))
-
-    elif form.validate_on_submit() == None:
-        flash('Invalid Email/Password')
+    elif len(form.errors.items()) > 0:
+        errorList = flatten(list(form.errors.values()))
+        for error in errorList:
+            flash(error, 'danger')
         return redirect(url_for('login'))
 
     return render_template('login.html', form=form)
@@ -39,7 +61,6 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-
     if form.validate_on_submit():
         user = User(name=form.name.data,
                     email=form.email.data,
@@ -47,6 +68,12 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        flash('Thank you for registering! You can now login!')
+        flash('Thank you for registering! You can now login!', 'primary')
         return redirect(url_for('login'))
+    elif len(form.errors.items()) > 0:
+        errorList = flatten(list(form.errors.values()))
+        for error in errorList:
+            flash(error, 'danger')
+        return redirect(url_for('register'))
+
     return render_template('register.html', form=form)

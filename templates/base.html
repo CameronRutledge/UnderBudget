@@ -1,37 +1,39 @@
-<html lang="en">
+<html lang='en'>
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="jquery-3.3.1-1.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
+  <link rel='stylesheet' href='https://bootswatch.com/5/darkly/bootstrap.css' crossorigin='anonymous'>
+  <link rel='stylesheet' href='{{ url_for('static', filename='css/style.css') }}'>
+  <script src='https://code.jquery.com/jquery-3.3.1.slim.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=yes'>
   <title>Budget Keeper</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-
+  <nav class='navbar navbar-expand-lg navbar-dark'>
+    <div class='navbar-nav mr-auto'>
+      <a class='nav-item nav-link' href='{{ url_for('home') }}'>Home</a>
+      <a class='nav-item nav-link' href='{{ url_for('budgetsheets') }}'>Budget Sheets</a>
     </div>
-    <div class="navbar-nav ml-auto">
+    <div class='navbar-nav ml-auto'>
       {% if current_user.is_authenticated %}
-      <li class="nav-link"><a href="{{ url_for('logout') }}">Log Out</a></li>
+      <li class='nav-link'><a href='{{ url_for('logout') }}'>Log Out</a></li>
       {% else %}
-      <li class="nav-link"><a href="{{ url_for('login') }}">Log In</a></li>
-      <li class="nav-link"><a href="{{ url_for('register') }}">Register</a></li>
+      <li class='nav-link'><a href='{{ url_for('login') }}'>Log In</a></li>
+      <li class='nav-link'><a href='{{ url_for('register') }}'>Register</a></li>
       {% endif %}
     </div>
   </nav>
-    <div class="jumbotron">
-      <div class="container-fluid">
-        {% with messages = get_flashed_messages() %}
+    <div class='jumbotron'>
+      <div class='container-fluid'>
+        {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
-            {% for message in messages %}
-              {{ message }}
+            {% for category, message in messages %}
+              <div class='alert alert-{{ category }} alert-dismissible' role='alert'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                {{ message }}
+              </div>
             {% endfor %}
           {% endif %}
         {% endwith %}
