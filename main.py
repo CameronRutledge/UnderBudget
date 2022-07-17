@@ -16,6 +16,7 @@ def home():
     else:
         print ('test')
         all = User.query.all()
+        print (all)
         for user in all:
             print (user.email)
 
