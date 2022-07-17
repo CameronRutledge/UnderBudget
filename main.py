@@ -15,6 +15,9 @@ def home():
         return(redirect(url_for('home')))
     else:
         print ('test')
+        all = User.query.all()
+        for user in all:
+            print (user.email)
 
     if current_user.is_authenticated:
         return render_template('home.html', savingsForm = savingsForm)
