@@ -1,31 +1,36 @@
 from init import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user, current_user
-from models import User
+from models import User, Month, Expense
 from forms import LoginForm, RegistrationForm, SavingsForm
 from nltk import flatten
 
 @app.route('/', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def home():
     savingsForm = SavingsForm()
-
-    if savingsForm.validate_on_submit():
-        print (savingsForm.salary.data)
-        print (savingsForm.savings_date.data)
-        return(redirect(url_for('home')))
-    else:
-        print ('test')
-        all = User.query.all()
-        print (all)
-        for user in all:
-            print (user.email)
-
     if current_user.is_authenticated:
+        if savingsForm.validate_on_submit():
+            print (savingsForm.salary.data)
+            print (savingsForm.savings_date.data)
+            return(redirect(url_for('home')))
+        elif len(savingsForm.errors.items()) > 0:
+            errorList = flatten(list(savingsForm.errors.values()))
+            for error in errorList:
+                flash(error, 'danger')
+            return redirect(url_for('home'))
+
         return render_template('home.html', savingsForm = savingsForm)
     else:
-        return render_template('home.html', savingsForm = savingsForm, test = '2019-05')
+        if savingsForm.validate_on_submit():
+            flash('You Must Log In First!', 'danger')
+            return redirect(url_for('login'))
+        elif len(savingsForm.errors.items()) > 0:
+            flash('You Must Log In First!', 'danger')
+            return redirect(url_for('login'))
+        return render_template('home.html', savingsForm = savingsForm)
 
 @app.route('/budgetsheets')
+@login_required
 def budgetsheets():
     if current_user.is_authenticated:
         return render_template('budgetsheets.html', test = current_user.email)
@@ -36,7 +41,7 @@ def budgetsheets():
 @login_required
 def logout():
     logout_user()
-    flash('You logged out!')
+    flash('You Logged Out!', 'primary')
     return redirect(url_for('home'))
 
 @app.route('/login', methods=['GET', 'POST'])
