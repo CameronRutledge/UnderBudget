@@ -14,7 +14,7 @@
   <nav class='navbar navbar-expand-lg navbar-dark'>
     <div class='navbar-nav mr-auto'>
       <a class='nav-item nav-link' href='{{ url_for('home') }}'>Home</a>
-      <a class='nav-item nav-link' href='{{ url_for('budgetsheets') }}'>Budget Sheets</a>
+      <a class='nav-item nav-link' href='{{ url_for('expensesheets') }}'>Expense Sheets</a>
     </div>
     <div class='navbar-nav ml-auto'>
       {% if current_user.is_authenticated %}

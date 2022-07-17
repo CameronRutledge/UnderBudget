@@ -29,7 +29,7 @@ def home():
             return redirect(url_for('login'))
         return render_template('home.html', savingsForm = savingsForm)
 
-@app.route('/budgetsheets')
+@app.route('/expensesheets')
 @login_required
 def budgetsheets():
     if current_user.is_authenticated:
