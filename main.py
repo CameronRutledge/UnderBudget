@@ -31,7 +31,7 @@ def home():
 
 @app.route('/expensesheets')
 @login_required
-def budgetsheets():
+def expensesheets():
     if current_user.is_authenticated:
         return render_template('expensesheets.html', test = current_user.email)
     else:
