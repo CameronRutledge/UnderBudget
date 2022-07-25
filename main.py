@@ -38,7 +38,7 @@ def home():
         elif len(savingsForm.errors.items()) > 0:
             flash('You Must Log In First!', 'danger')
             return redirect(url_for('login'))
-        return render_template('home.html', savingsForm = savingsForm)
+        return render_template('home.html', savingsForm = savingsForm, expenseForm = expenseForm)
 
 @app.route('/expensesheets')
 @login_required
