@@ -2,16 +2,26 @@ from init import app, db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from models import User, Month, Expense
-from forms import LoginForm, RegistrationForm, SavingsForm
+from forms import LoginForm, RegistrationForm, SavingsForm, ExpenseForm
 from nltk import flatten
+import datetime
 
 @app.route('/', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def home():
     savingsForm = SavingsForm()
+    expenseForm = ExpenseForm()
     if current_user.is_authenticated:
+        if current_user.salary is None:
+            savingsForm.savings_date.data = datetime.datetime(2023, 1, 1)
+        elif savingsForm.salary.data is None:
+            savingsForm.salary.data = current_user.salary
+            savingsForm.savings_goal.data = current_user.savings_goal
+            savingsForm.savings_date.data = current_user.savings_date
         if savingsForm.validate_on_submit():
-            print (savingsForm.salary.data)
-            print (savingsForm.savings_date.data)
+            current_user.salary = savingsForm.salary.data
+            current_user.savings_goal = savingsForm.savings_goal.data
+            current_user.savings_date = savingsForm.savings_date.data
+            db.session.commit()
             return(redirect(url_for('home')))
         elif len(savingsForm.errors.items()) > 0:
             errorList = flatten(list(savingsForm.errors.values()))
@@ -19,8 +29,9 @@ def home():
                 flash(error, 'danger')
             return redirect(url_for('home'))
 
-        return render_template('home.html', savingsForm = savingsForm)
+        return render_template('home.html', savingsForm = savingsForm, expenseForm = expenseForm)
     else:
+        savingsForm.savings_date.data = datetime.datetime(2023, 1, 1)
         if savingsForm.validate_on_submit():
             flash('You Must Log In First!', 'danger')
             return redirect(url_for('login'))
@@ -51,6 +62,12 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user)
+            monthcheck = Month.query.filter_by(user_id=user.id).all()
+            if monthcheck[-1].month.strftime("%Y-%m") != datetime.datetime.now().strftime("%Y-%m"):
+                month = Month(month=datetime.datetime.now(),
+                              user_id=user.id)
+                db.session.add(month)
+                db.session.commit()
             flash('Welcome ' + current_user.name + '!', 'primary')
             next = request.args.get('next')
             if next == None or not next[0]=='/':
@@ -76,6 +93,10 @@ def register():
                     password=form.password.data)
 
         db.session.add(user)
+        db.session.commit()
+        month = Month(month=datetime.datetime.now(),
+                      user_id=user.id)
+        db.session.add(month)
         db.session.commit()
         flash('Thank you for registering! You can now login!', 'primary')
         return redirect(url_for('login'))

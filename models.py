@@ -48,4 +48,5 @@ class Expense(db.Model):
     expense_id = db.Column(db.Integer, primary_key = True)
     expense_type = db.Column(db.Text)
     cost = db.Column(db.Integer)
+    date = db.Column(db.Date)
     month_id = db.Column(db.Integer, db.ForeignKey('month.month_id'))

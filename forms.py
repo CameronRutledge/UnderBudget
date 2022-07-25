@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, IntegerField, DateField, SubmitField
+from wtforms import StringField, PasswordField, IntegerField, DateField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 from models import User
@@ -25,3 +25,7 @@ class SavingsForm(FlaskForm):
     salary = IntegerField(validators=[DataRequired('Please Enter Your Salary')])
     savings_goal = IntegerField(validators=[DataRequired('Please Enter Your Savings Goal')])
     savings_date = DateField(format='%Y-%m', validators=[DataRequired('Please Enter Your Savings Deadline')])
+
+class ExpenseForm(FlaskForm):
+    expense_type = SelectField('Expense Type', choices=[(1,'Housing'), (2, 'Transportation'), (3, 'Food'), (4, 'Entertainment'), (5, 'Misc.')], validators=[DataRequired('Please Enter The Cost of Your Expense')])
+    cost = IntegerField('Expense Cost', validators=[DataRequired('Please Enter The Cost of Your Expense')])

@@ -6,38 +6,59 @@
     <div class='col'>
       <div class='row align-items-center justify-content-center'>
         <div class='col'>
-          <div class='input-group mb-3'>
-            <div class='input-group-prepend'>
-              <span class='input-group-text'>$</span>
+          <div class='row align-items-center justify-content-center'>
+            <div class='text-center'>Salary</div>
+          </div>
+          <div class='row align-items-center justify-content-center'>
+            <div class='input-group mb-3'>
+              <div class='input-group-prepend'>
+                <span class='input-group-text'>$</span>
+              </div>
+              {{ savingsForm.salary(class='form-control calculate',  placeholder='Salary', id = 'salary') }}
             </div>
-            {{ savingsForm.salary(class='form-control', placeholder='Salary') }}
           </div>
         </div>
         <div class='col'>
-          <div class='input-group mb-3'>
-            <div class='input-group-prepend'>
-              <span class='input-group-text'>$</span>
-            </div>
-            {{ savingsForm.savings_goal(class='form-control', placeholder='Savings Goal') }}
+          <div class='row align-items-center justify-content-center'>
+            <div class='text-center'>Savings Goal</div>
           </div>
-      </div>
-      <div class='col'>
-        <div class='input-group mb-3'>
-          {{ savingsForm.savings_date(class='form-control', type='month', min='2023-01', max='2123-01', value='2024-01') }}
+          <div class='row align-items-center justify-content-center'>
+            <div class='input-group mb-3'>
+              <div class='input-group-prepend'>
+                <span class='input-group-text'>$</span>
+              </div>
+              {{ savingsForm.savings_goal(class='form-control calculate', placeholder='Savings Goal', id = 'savings_goal') }}
+            </div>
+          </div>
+        </div>
+        <div class='col'>
+          <div class='row align-items-center justify-content-center'>
+            <div class='text-center'>Savings Date</div>
+          </div>
+          <div class='row align-items-center justify-content-center'>
+            <div class='input-group mb-3'>
+              {{ savingsForm.savings_date(class='form-control calculate', type='month', min='2023-01', max='2123-01', id = 'savings_date') }}
+            </div>
+          </div>
         </div>
       </div>
-      </div>
       <div class='row align-items-center justify-content-center'>
-          <div class='col-md-auto'>
-            <div> TEST TEST TEST </div>
-          </div>
+        <div class='col-md-auto'>
+          <div class='displaySavings'></div>
+        </div>
       </div>
     </div>
-    <div class='col-md-auto' rowspawn= '2'>
-      <div class='input-group mb-3'>
-        <button class='h-200 btn btn-lg btn-primary' type='submit'>Save</button>
-      </div>
+  <div class='col-md-auto'>
+    <div class='input-group mb-3'>
+      <button class='h-200 btn btn-lg btn-primary' type='submit'>Save</button>
     </div>
   </div>
+  </div>
+</form>
+
+<form class='form-group' method='POST'>
+   {{ expenseForm.hidden_tag() }}
+   {{ expenseForm.expense_type(class='form-control') }}
+   {{ expenseForm.cost(class='form-control') }}
 </form>
 {% endblock %}
