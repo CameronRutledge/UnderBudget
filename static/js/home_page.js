@@ -1,5 +1,5 @@
 function displaySavings(salary, savings_goal, savings_date){
-  if (salary != null && savings_goal != null && savings_date != null) {
+  if (salary != '' && savings_goal != '') {
     var today = new Date();
     var savedate = savings_date.split('-');
     var printDate = new Date(savedate[0], savedate[1] - 1)

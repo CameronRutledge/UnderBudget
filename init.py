@@ -18,3 +18,5 @@ Migrate(app,db)
 
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+login_manager.login_message = 'You Must Sign In To Access This Page'
+login_manager.login_message_category = 'danger'

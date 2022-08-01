@@ -1,0 +1,105 @@
+{% extends 'home.html' %}
+
+{% block head %}
+<script type='text/javascript' src='{{ url_for('static', filename='js/home_page.js') }}'></script>
+<script type='text/javascript' src='{{ url_for('static', filename='js/authenticated_home.js') }}'></script>
+<title>Budget Keeper</title>
+{% endblock %}
+
+{% block authenticated_content %}
+<form class='form-group' method='POST'>
+  {{ expenseForm.hidden_tag() }}
+  <div class='row align-items-center justify-content-center'>
+    <div class='col-md-4'>
+      <div class='row align-items-center justify-content-center'>
+        <div class='col'>
+          <div class='row'>
+            <div class='col'>
+              <div class='row'>
+                <div class='text-center'>Expense Type</div>
+              </div>
+              <div class='row'>
+                <div class='input-group mb-3'>
+                  {{ expenseForm.expense_type(class='form-control') }}
+                </div>
+              </div>
+            </div>
+            <div class='col'>
+              <div class='row'>
+                <div class='text-center'>Cost</div>
+              </div>
+              <div class='row'>
+                <div class='input-group mb-3'>
+                  <div class='input-group-prepend'>
+                    <span class='input-group-text'>$</span>
+                  </div>
+                  {{ expenseForm.cost(class='form-control', type='number', placeholder='Cost') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-auto'>
+          <div class='input-group'>
+            {{ expenseForm.expense_submit(class='h-200 btn btn-lg btn-primary') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class='container-fluid overflow-auto' style='max-height: 57vh'>
+  {% if expenses %}
+    {% for expense in expenses %}
+      <form class='form-group' method='POST'>
+        {{ editForm.hidden_tag() }}
+        <div class='row align-items-center justify-content-center'>
+          <div class='col'>
+            <div class='row'>
+              <div class='text-center'>Expense Date</div>
+            </div>
+            <div class='row'>
+              <div class='input-group mb-3'>
+                <div class='form-control'>
+                  {{ expense.date.strftime('%B %d') }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='col'>
+            <div class='row'>
+              <div class='text-center'>Expense Type</div>
+            </div>
+            <div class='row'>
+              <div class='input-group mb-3'>
+                {{ editForm.expense_type(class='form-control hacky', value=expense.expense_type) }}
+              </div>
+            </div>
+          </div>
+          <div class='col'>
+            <div class='row'>
+              <div class='text-center'>Cost</div>
+            </div>
+            <div class='row'>
+              <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                  <span class='input-group-text'>$</span>
+                </div>
+                {{ editForm.cost(class='form-control', type='number', value=expense.cost) }}
+              </div>
+            </div>
+          </div>
+          <div class='col-md-auto'>
+            {{ editForm.update_expense(class='h-200 btn btn-lg btn-primary') }}
+          </div>
+          <div class='col-md-auto'>
+            {{ editForm.remove_expense(class='h-200 btn btn-lg btn-primary') }}
+          </div>
+          {{ editForm.expense_id(value=expense.expense_id, style='display:none') }}
+        </div>
+      </form>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

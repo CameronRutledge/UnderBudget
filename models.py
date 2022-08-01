@@ -50,3 +50,9 @@ class Expense(db.Model):
     cost = db.Column(db.Integer)
     date = db.Column(db.Date)
     month_id = db.Column(db.Integer, db.ForeignKey('month.month_id'))
+
+    def __init__(self, expense_type, cost, date, month_id):
+        self.expense_type = expense_type
+        self.cost = cost
+        self.date = date
+        self.month_id = month_id

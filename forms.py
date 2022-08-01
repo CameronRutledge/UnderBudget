@@ -9,7 +9,8 @@ class RegistrationForm(FlaskForm):
     name = StringField(validators=[DataRequired('Please Enter Your Name')])
     email = StringField(validators=[DataRequired('Please Enter A Valid Email Address'),Email('Please Enter A Valid Email Address')])
     password = PasswordField(validators=[DataRequired('Please Enter A Password'), EqualTo('pass_confirm', message='Passwords Do Not Match. Please Re-Enter Your Password')])
-    pass_confirm = PasswordField(validators=[DataRequired('Please Confirm Your Password')])
+    pass_confirm = PasswordField(validators=[DataRequired('Please Re-Enter Your Password')])
+    create_account = SubmitField('Create Account')
 
     #Email Registration Check
     def validate_email(self, email):
@@ -19,13 +20,23 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField(validators=[DataRequired('Please Enter An Email Address'), Email('Please Enter A Valid Email Address')])
     password = PasswordField(validators=[DataRequired('Please Enter A Password')])
+    login = SubmitField('Sign In')
 
 
 class SavingsForm(FlaskForm):
     salary = IntegerField(validators=[DataRequired('Please Enter Your Salary')])
     savings_goal = IntegerField(validators=[DataRequired('Please Enter Your Savings Goal')])
     savings_date = DateField(format='%Y-%m', validators=[DataRequired('Please Enter Your Savings Deadline')])
+    savings_submit = SubmitField('Save Goal')
 
 class ExpenseForm(FlaskForm):
-    expense_type = SelectField('Expense Type', choices=[(1,'Housing'), (2, 'Transportation'), (3, 'Food'), (4, 'Entertainment'), (5, 'Misc.')], validators=[DataRequired('Please Enter The Cost of Your Expense')])
+    expense_type = SelectField('Expense Type', choices=[('Housing','Housing'), ('Transportation', 'Transportation'), ('Food', 'Food'), ('Entertainment', 'Entertainment'), ('Misc.', 'Misc.')])
     cost = IntegerField('Expense Cost', validators=[DataRequired('Please Enter The Cost of Your Expense')])
+    expense_submit = SubmitField('Add Expense')
+
+class EditForm(FlaskForm):
+    expense_type = SelectField('Expense Type', choices=[('Housing','Housing'), ('Transportation', 'Transportation'), ('Food', 'Food'), ('Entertainment', 'Entertainment'), ('Misc.', 'Misc.')])
+    cost = IntegerField('Expense Cost', validators=[DataRequired('You Cannot Remove The Cost')])
+    expense_id = StringField()
+    update_expense = SubmitField('Update')
+    remove_expense = SubmitField('Delete')
