@@ -2,6 +2,7 @@ Flask==1.0.2
 Flask-DebugToolbar==0.10.1
 Flask-Login==0.4.1
 Flask-Migrate==2.1.1
+Flask-Restful==0.3.9
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 gunicorn==20.0.2

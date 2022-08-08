@@ -27,11 +27,11 @@
         {% endif %}
       </div>
     </nav>
-    <div class='BigBangBosh' style='position:fixed; z-index:7; width: 50%; left:50%; top:7.5%; transform: translateX(-50%);'>
+    <div class='alert-overlay' style='position:fixed; z-index:7; width: 25%; left:50%; top:6%; transform: translateX(-50%);'>
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
-            <div class='alert alert-{{ category }} alert-dismissible' role='alert'>
+            <div class='alert alert-{{ category }} alert-dismissible text-center' role='alert'>
               <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
               {{ message }}
             </div>

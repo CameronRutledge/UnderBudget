@@ -14,7 +14,7 @@ function displaySavings(salary, savings_goal, savings_date){
     var save_percent = Math.round((save_amount / (salary / 12)) * 10000)/100;
     $(".displaySavings").text(`In order to save $${savings_goal} by ${printDate}, you will need to save $${save_amount} every month, which is ${save_percent}% of your monthly salary.`);
   } else {
-    $(".displaySavings").text('Please Input.');
+    $(".displaySavings").text('Input your annual salary, the total amount you want to save, and your goal deadline, to determine your monthly savings goal.');
   }
 }
 $(document).ready(function(){

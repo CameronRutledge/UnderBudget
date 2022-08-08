@@ -75,13 +75,23 @@ def home():
             return redirect(url_for('login'))
         return render_template('home.html', savingsForm = savingsForm, expenseForm = expenseForm, editForm = editForm)
 
-@app.route('/expensesheets')
+@app.route('/expensesheets', methods=['GET', 'POST'])
 @login_required
 def expensesheets():
     if current_user.is_authenticated:
-        return render_template('expensesheets.html', test = current_user.email)
+        if request.method == 'POST':
+            print ('test')
+        #if 'monthSelect' in locals():
+            #getMonth = Month.query.filter_by(month=monthSelect, user_id=current_user.id).first()
+        #else:
+            #getMonth = Month.query.filter_by(month=monthSelect, user_id=current_user.id).all()
+        #expenses = Expense.query.filter_by(month_id=getMonth.month_id).all()
+
+
+
+        return render_template('expensesheets.html')
     else:
-        return render_template('expensesheets.html', test = 'testers')
+        return render_template('expensesheets.html')
 
 @app.route('/logout')
 @login_required
@@ -126,9 +136,6 @@ def register():
         user = User(name=form.name.data,
                     email=form.email.data,
                     password=form.password.data)
-
-        db.session.add(user)
-        db.session.commit()
         month = Month(month=datetime.datetime.now(),
                       user_id=user.id)
         db.session.add(month)

@@ -3,6 +3,7 @@
 {% block head %}
 <script type='text/javascript' src='{{ url_for('static', filename='js/home_page.js') }}'></script>
 <script type='text/javascript' src='{{ url_for('static', filename='js/authenticated_home.js') }}'></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <title>Budget Keeper</title>
 {% endblock %}
 
@@ -49,57 +50,64 @@
   </div>
 </form>
 
-<div class='container-fluid overflow-auto' style='max-height: 57vh'>
+<div class='row align-items-center justify-content-center'>
   {% if expenses %}
-    {% for expense in expenses %}
-      <form class='form-group' method='POST'>
-        {{ editForm.hidden_tag() }}
-        <div class='row align-items-center justify-content-center'>
-          <div class='col'>
-            <div class='row'>
-              <div class='text-center'>Expense Date</div>
-            </div>
-            <div class='row'>
-              <div class='input-group mb-3'>
-                <div class='form-control'>
-                  {{ expense.date.strftime('%B %d') }}
+    <div class='col'>
+      <div class='container-fluid overflow-auto' style='max-height: 55vh'>
+        {% for expense in expenses %}
+          <form class='form-group' method='POST'>
+            {{ editForm.hidden_tag() }}
+            <div class='row align-items-center justify-content-center'>
+              <div class='col'>
+                <div class='row'>
+                  <div class='text-center'>Expense Date</div>
+                </div>
+                <div class='row'>
+                  <div class='input-group mb-3'>
+                    <div class='form-control'>
+                      {{ expense.date.strftime('%B %d') }}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='row'>
-              <div class='text-center'>Expense Type</div>
-            </div>
-            <div class='row'>
-              <div class='input-group mb-3'>
-                {{ editForm.expense_type(class='form-control hacky', value=expense.expense_type) }}
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='row'>
-              <div class='text-center'>Cost</div>
-            </div>
-            <div class='row'>
-              <div class='input-group mb-3'>
-                <div class='input-group-prepend'>
-                  <span class='input-group-text'>$</span>
+              <div class='col'>
+                <div class='row'>
+                  <div class='text-center'>Expense Type</div>
                 </div>
-                {{ editForm.cost(class='form-control', type='number', value=expense.cost) }}
+                <div class='row'>
+                  <div class='input-group mb-3'>
+                    {{ editForm.expense_type(class='form-control type_display', value=expense.expense_type) }}
+                  </div>
+                </div>
               </div>
+              <div class='col'>
+                <div class='row'>
+                  <div class='text-center'>Cost</div>
+                </div>
+                <div class='row'>
+                  <div class='input-group mb-3'>
+                    <div class='input-group-prepend'>
+                      <span class='input-group-text'>$</span>
+                    </div>
+                    {{ editForm.cost(class='form-control cost_display', type='number', value=expense.cost) }}
+                  </div>
+                </div>
+              </div>
+              <div class='col-md-auto'>
+                {{ editForm.update_expense(class='h-200 btn btn-lg btn-primary') }}
+              </div>
+              <div class='col-md-auto'>
+                {{ editForm.remove_expense(class='h-200 btn btn-lg btn-danger') }}
+              </div>
+              {{ editForm.expense_id(value=expense.expense_id, style='display:none') }}
             </div>
-          </div>
-          <div class='col-md-auto'>
-            {{ editForm.update_expense(class='h-200 btn btn-lg btn-primary') }}
-          </div>
-          <div class='col-md-auto'>
-            {{ editForm.remove_expense(class='h-200 btn btn-lg btn-primary') }}
-          </div>
-          {{ editForm.expense_id(value=expense.expense_id, style='display:none') }}
-        </div>
-      </form>
-    {% endfor %}
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+    <div class='col'>
+      <div id="piechart_3d" style='width:100%; min-height: 500px;'></div>
+    </div>
   {% endif %}
 </div>
 {% endblock %}
