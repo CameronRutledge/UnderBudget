@@ -118,7 +118,7 @@ def expensesheets():
     dateForm = DateForm()
     today = date.today()
     min = (today + relativedelta(years=1)).strftime('%Y-%m')
-    max = (today + relativedelta(years=100)).strftime('%Y-%m')
+    max = today.strftime('%Y-%m')
     if session.get('monthSelect') is not None:
         if session.get('monthError') is not None:
             flash(session['monthError'], 'danger')
