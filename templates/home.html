@@ -2,7 +2,7 @@
 
 {% block head %}
 <script type='text/javascript' src='{{ url_for('static', filename='js/home_page.js') }}'></script>
-<title>Budget Keeper</title>
+<title>Home - Under Budget</title>
 {% endblock %}
 
 {% block default_content %}
@@ -20,7 +20,7 @@
               <div class='input-group-prepend'>
                 <span class='input-group-text'>$</span>
               </div>
-              {{ savingsForm.salary(class='form-control calculate', type='number', data=0, placeholder='Salary', id = 'salary') }}
+              {{ savingsForm.salary(class='form-control calculate', type='number', data=0, placeholder='Salary', id='salary') }}
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
               <div class='input-group-prepend'>
                 <span class='input-group-text'>$</span>
               </div>
-              {{ savingsForm.savings_goal(class='form-control calculate', type='number', data=0, placeholder='Savings Goal', id = 'savings_goal') }}
+              {{ savingsForm.savings_goal(class='form-control calculate', type='number', data=0, placeholder='Savings Goal', id='savings_goal') }}
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
           </div>
           <div class='row'>
             <div class='input-group mb-3'>
-              {{ savingsForm.savings_date(class='form-control calculate', type='month', min='2023-01', max='2123-01', id = 'savings_date') }}
+              {{ savingsForm.savings_date(class='form-control calculate', type='month', min=min, max=max, id='savings_date') }}
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
   </div>
   <div class='row align-items-center justify-content-center'>
     <div class='col-xl-auto'>
-      <div class='displaySavings'>How much money do you want to save?</div>
+      <div class='displaySavings'></div>
     </div>
   </div>
 </form>

@@ -1,7 +1,6 @@
 from init import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import date
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -14,6 +13,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique = True, index = True)
     password_hash = db.Column(db.String)
     salary = db.Column(db.Integer)
+    current_savings = db.Column(db.Integer)
     savings_goal = db.Column(db.Integer)
     date_created = db.Column(db.Date)
     savings_date = db.Column(db.Date)
@@ -21,38 +21,40 @@ class User(db.Model, UserMixin):
     #Relationships
     months = db.relationship('Month', backref='user', lazy='dynamic')
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, date):
         self.name = name
         self.email = email
         self.password_hash = generate_password_hash(password)
-        self.date_created = date.today()
+        self.date_created = date
+        self.salary = 0
+        self.current_savings = 0
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
     def json(self):
-        return {'id': self.id, 'name': self.name, 'email': self.email, 'password_hash': self.password_hash, 'salary': self.salary, 'savings_goal': self.savings_goal, 'date_created': self.date_created, 'savings_date': self.savings_date}
+        return {'id': self.id, 'name': self.name, 'email': self.email, 'password_hash': self.password_hash, 'salary': self.salary, 'current_savings': self.current_savings, 'savings_goal': self.savings_goal, 'date_created': self.date_created, 'savings_date': self.savings_date}
 
 class Month(db.Model):
 
     month_id = db.Column(db.Integer, primary_key = True)
-    month = db.Column(db.Date)
+    date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     #Relationships
     expenses = db.relationship('Expense', backref='month', lazy='dynamic')
 
-    def __init__(self, month, user_id):
-        self.month = month
+    def __init__(self, date, user_id):
+        self.date = date
         self.user_id = user_id
 
     def json(self):
-        return {'month_id': self.month_id, 'month': self.month, 'user_id': self.user_id}
+        return {'month_id': self.month_id, 'date': self.date, 'user_id': self.user_id}
 
 class Expense(db.Model):
 
     expense_id = db.Column(db.Integer, primary_key = True)
-    expense_type = db.Column(db.Text)
+    expense_type = db.Column(db.String)
     cost = db.Column(db.Integer)
     date = db.Column(db.Date)
     month_id = db.Column(db.Integer, db.ForeignKey('month.month_id'))

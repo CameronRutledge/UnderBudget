@@ -1,10 +1,11 @@
 {% extends 'home.html' %}
 
 {% block head %}
+<script>var start_date = {{ start_date|tojson }}</script>
 <script type='text/javascript' src='{{ url_for('static', filename='js/home_page.js') }}'></script>
-<script type='text/javascript' src='{{ url_for('static', filename='js/authenticated_home.js') }}'></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<title>Budget Keeper</title>
+<script type='text/javascript' src='{{ url_for('static', filename='js/authenticated_content.js') }}'></script>
+<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+<title>Home - Under Budget</title>
 {% endblock %}
 
 {% block authenticated_content %}
@@ -49,8 +50,9 @@
     </div>
   </div>
 </form>
-
-<div class='row align-items-center justify-content-center'>
+<div> {{ savingsDifference }} </div>
+<div> {{ savingsPlan }} </div>
+<div class='row justify-content-center'>
   {% if expenses %}
     <div class='col'>
       <div class='container-fluid overflow-auto' style='max-height: 55vh'>
@@ -106,7 +108,8 @@
       </div>
     </div>
     <div class='col'>
-      <div id="piechart_3d" style='width:100%; min-height: 500px;'></div>
+      <div class='text-center' id='month_overview'>{{ expenses[0].date.strftime('%B %Y') }}</div>
+      <div id='piechart_3d' style='width:100%; min-height: 500px;'></div>
     </div>
   {% endif %}
 </div>

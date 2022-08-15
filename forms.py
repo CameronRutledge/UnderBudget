@@ -22,7 +22,6 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[DataRequired('Please Enter A Password')])
     login = SubmitField('Sign In')
 
-
 class SavingsForm(FlaskForm):
     salary = IntegerField(validators=[DataRequired('Please Enter Your Salary')])
     savings_goal = IntegerField(validators=[DataRequired('Please Enter Your Savings Goal')])
@@ -40,3 +39,6 @@ class EditForm(FlaskForm):
     expense_id = StringField()
     update_expense = SubmitField('Update')
     remove_expense = SubmitField('Delete')
+
+class DateForm(FlaskForm):
+    month_select = DateField(format='%Y-%m')
