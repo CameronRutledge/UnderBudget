@@ -1,4 +1,5 @@
 # UnderBudget
-Software Development Capstone Project. Budgeting Application
+Software Development 691 Capstone Project. Budgeting Application
 
-This application will allow a user to set a goal for how much money they want to save by a set date and track their ongoing progress of their savings through monthly expense sheets.
+This web application allows for users to set a savings goal and calculate the amount the user needs to save a month to meet their goal by a set date. User progress to meeting their savings goal is tracked through the user input of expenses onto monthly expense sheets.
+
