@@ -8,27 +8,29 @@
 {% endblock %}
 
 {% block authenticated_content %}
-<div class='row align-items-center justify-content-center'>
-  <div class='col-xl-4'>
-    {{ current_savings }}
-  </div>
-  <div class='col'>
-    <div id='barchart' style='width:100%; min-height: 280px;'></div>
+<div class='container-top'>
+  <div class='row align-items-center justify-content-center'>
+    <div class='col-3  text-center display'>
+      {% for progress in savingsProgress %}
+        <div> {{ progress }} </div>
+      {% endfor %}
+    </div>
+    <div class='col-9'>
+      <div id='barchart' style='width:100%; min-height: 30vh;'></div>
+    </div>
   </div>
 </div>
-<form class='form-group align-self-end' method='POST'>
-  <input class='form-control month_select' type='month' min='{{ min }}' value='{{ monthSelected }}' max='{{ max }}' style='width:10%; float:right'>
-</form>
-<div class='row align-items-center justify-content-center'>
-  {% if expenses %}
+{% if expenses %}
+<div class='container-bottom'>
+  <div class='row align-items-center justify-content-center'>
     <div class='col'>
-      <div class='container-fluid overflow-auto' style='max-height: 50vh'>
+      <div class='container-fluid overflow-auto' style='max-height: 45vh'>
         {% for expense in expenses %}
         <form class='form-group'>
           <div class='row align-items-center justify-content-center'>
             <div class='col'>
               <div class='row'>
-                <div class='text-center'>Expense Date</div>
+                <div class='text-center display'>Expense Date</div>
               </div>
               <div class='row'>
                 <div class='input-group mb-3'>
@@ -40,7 +42,7 @@
             </div>
             <div class='col'>
               <div class='row'>
-                <div class='text-center'>Expense Type</div>
+                <div class='text-center display'>Expense Type</div>
               </div>
               <div class='row'>
                 <div class='input-group mb-3'>
@@ -52,7 +54,7 @@
             </div>
             <div class='col'>
               <div class='row'>
-                <div class='text-center'>Cost</div>
+                <div class='text-center display'>Cost</div>
               </div>
               <div class='row'>
                 <div class='input-group mb-3'>
@@ -71,9 +73,13 @@
       </div>
     </div>
     <div class='col'>
-      <div class='text-center' id='month_overview'>{{ expenses[0].date.strftime('%B %Y') }}</div>
-      <div id='piechart_3d' style='width:100%; min-height: 450px;'></div>
+      <form class='form-group float-right' style='width:20%; margin: 0' method='POST'>
+        <input class='form-control month_select' type='month' min='{{ min }}' value='{{ monthSelected }}' max='{{ max }}'>
+      </form>
+      <div id='piechart_3d' style='clear: both; width:100%; min-height: 43vh;'></div>
+      <div class='text-center display' id='month_overview'>{{ expenses[0].date.strftime('%B %Y') }}</div>
     </div>
-  {% endif %}
+  </div>
 </div>
+{% endif %}
 {% endblock %}

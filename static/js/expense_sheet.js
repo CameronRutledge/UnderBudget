@@ -1,3 +1,4 @@
+// Function for the creation of Google Line Chart
 function drawLineChart() {
   var data = google.visualization.arrayToDataTable(bar_chart_array);
     var options = {
@@ -40,6 +41,7 @@ function drawLineChart() {
   linechart.draw(data, options);
 }
 $(document).ready(function(){
+  // POSTs selection of month to monthselect for data processing
   var monthSelect = $('.month_select').val()
   $('.month_select').change(function(){
     if ($(this).val() != monthSelect){

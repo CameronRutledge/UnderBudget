@@ -32,9 +32,6 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def json(self):
-        return {'id': self.id, 'name': self.name, 'email': self.email, 'password_hash': self.password_hash, 'salary': self.salary, 'current_savings': self.current_savings, 'savings_goal': self.savings_goal, 'date_created': self.date_created, 'savings_date': self.savings_date}
-
 class Month(db.Model):
 
     month_id = db.Column(db.Integer, primary_key = True)
@@ -47,9 +44,6 @@ class Month(db.Model):
     def __init__(self, date, user_id):
         self.date = date
         self.user_id = user_id
-
-    def json(self):
-        return {'month_id': self.month_id, 'date': self.date, 'user_id': self.user_id}
 
 class Expense(db.Model):
 
@@ -64,6 +58,3 @@ class Expense(db.Model):
         self.cost = cost
         self.date = date
         self.month_id = month_id
-
-    def json(self):
-        return {'expense_id': self.expense_id, 'expense_type': self.expense_type, 'cost': self.cost, 'date': self.date, 'month_id': self.month_id}

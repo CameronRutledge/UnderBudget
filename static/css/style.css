@@ -10,7 +10,7 @@
   padding-left: .5vh;
 }
 .jumbotron {
-  background-color: #474747;
+  background-color: #181818;
   margin-bottom: 0;
   padding: 2rem;
   padding-bottom: 0;
@@ -25,6 +25,25 @@
   padding-left: 2vh;
   border-radius: 15px;
 }
+.container-top {
+  background-color: #474747;
+  padding-top: 1vh;
+  padding-right: 2vh;
+  padding-left: 2vh;
+  border-radius: 30px;
+  margin-bottom: 3vh;
+}
+.container-bottom {
+  background-color: #474747;
+  padding-top: 1vh;
+  padding-right: 2vh;
+  padding-left: 2vh;
+  border-radius: 30px;
+}
+.display {
+  font-size: 2vh;
+}
+
 .flex-wrapper {
   display: flex;
   min-height: 100vh;
@@ -34,11 +53,12 @@
 .footer {
   margin-top: auto;
 }
+
 html {
   height: 100vh;
 }
 body {
-  background-color: #474747;
+  background-color: #181818;
   height: 100vh;
   position: relative;
 }
