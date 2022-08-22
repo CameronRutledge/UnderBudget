@@ -47,7 +47,7 @@ $(document).ready(function(){
   if (typeof(save_amount) == 'undefined') {
     $("#month_overview").text(`You spent $${total_cost} in ${month_overview}.`);
   } else {
-    $("#month_overview").text(`You have spent $${total_cost.toLocaleString('en-US')} in ${month_overview} so far. Be sure to keep this month's expenses below $${Math.round(((salary / 12) - save_amount)).toLocaleString('en-US')}.`);
+    $("#month_overview").text(`You have spent $${total_cost.toLocaleString('en-US')} in ${month_overview} so far. Be sure to keep this month's expenses below $${(Math.round(((salary / 12) - save_amount) * 100) / 100).toLocaleString('en-US')}.`);
   }
   google.charts.load("current", {packages:["corechart"]});
   google.charts.setOnLoadCallback(drawPieChart);
