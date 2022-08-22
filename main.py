@@ -259,16 +259,38 @@ def register():
 
     #Validates that user filled out all fields correctly.
     if form.validate_on_submit():
-        user = User(name=form.name.data,
-                email=form.email.data,
-                password=form.password.data,
-                date=date.today())
-        db.session.add(user)
-        db.session.commit()
-        month = Month(date=strip_date(date.today()),
-                user_id=user.id)
-        db.session.add(month)
-        db.session.commit()
+        #Creation of test user account for display of capabilities of application.
+        if form.email.data == 'test@test.com':
+            user = User(name=form.name.data,
+                    email=form.email.data,
+                    password=form.password.data,
+                    date=date(2022,4,15))
+            db.session.add(user)
+            user.salary = 80000
+            user.savings_goal = 100000
+            user.savings_date = date(2024,12,1)
+            user.current_savings = 11000
+            db.session.commit()
+            for months in range(4, 8):
+                month = Month(date=date(2022,months,1),
+                        user_id=user.id)
+                db.session.add(month)
+                db.session.commit()
+                for expenses in ['Housing', 'Housing', 'Housing', 'Housing', 'Housing', 'Transportation', 'Food', 'Entertainment', 'Transportation', 'Transportation', 'Food', 'Entertainment', 'Misc.', 'Transportation', 'Food']:
+                    expense = Expense(expenses, 200, date(2022,months,15), month.month_id)
+                    db.session.add(expense)
+                    db.session.commit()
+        else:
+            user = User(name=form.name.data,
+                    email=form.email.data,
+                    password=form.password.data,
+                    date=date.today())
+            db.session.add(user)
+            db.session.commit()
+            month = Month(date=strip_date(date.today()),
+                    user_id=user.id)
+            db.session.add(month)
+            db.session.commit()
         flash('Thank You For Registering! You Can Now Login!', 'primary')
         return redirect(url_for('login'))
     elif len(form.errors.items()) > 0:
