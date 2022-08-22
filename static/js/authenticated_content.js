@@ -42,6 +42,8 @@ $(document).ready(function(){
       }
     });
   }
+  console.log((salary / 12))
+  console.log(save_amount)
   if (typeof(save_amount) == 'undefined') {
     $("#month_overview").text(`You spent $${total_cost} in ${month_overview}.`);
   } else {

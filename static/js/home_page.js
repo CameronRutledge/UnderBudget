@@ -1,4 +1,5 @@
 var save_amount = 0
+var salary = 0
 // Takes input of salary, savings goal, and savings date to calculate.
 function displaySavings(salary, savings_goal, savings_date){
   if (isNaN(salary) || isNaN(savings_goal)) {
@@ -19,7 +20,7 @@ function displaySavings(salary, savings_goal, savings_date){
   }
 }
 $(document).ready(function(){
-  var salary = parseInt($('#salary').val().replace(/,/g, ''))
+  salary = parseInt($('#salary').val().replace(/,/g, ''))
   var savings_goal = parseInt($('#savings_goal').val().replace(/,/g, ''))
   var savings_date = $('#savings_date').val()
   displaySavings(salary, savings_goal, savings_date)
